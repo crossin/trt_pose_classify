@@ -57,15 +57,15 @@ class dataloader:
         """
         This method loads the images for training the classifier. 
         """
-        WIDTH = 256
-        HEIGHT = 256
+        WIDTH = 224
+        HEIGHT = 224
         for filename in sorted(os.listdir(train_path)):
             self.train_file_name.append(filename)
             image = cv2.imread(train_path+filename)
             #image = image[:, ::-1, :]
             #image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             image = cv2.resize(image, (WIDTH, HEIGHT), interpolation = cv2.INTER_AREA)
-            self.train_data.append(np.reshape(np.array(image), 196608))
+            self.train_data.append(np.reshape(np.array(image), 150528))
             self.train_images.append(image)
      
         for filename in sorted(os.listdir(test_path)):
@@ -75,7 +75,7 @@ class dataloader:
             #image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             image = cv2.resize(image, (WIDTH, HEIGHT), interpolation = cv2.INTER_AREA)
             self.test_images.append(image)
-            self.test_data.append(np.reshape(np.array(image), 196608))
+            self.test_data.append(np.reshape(np.array(image), 150528))
         #return train_images, test_images, train_data, test_data
     def smaller_dataset(self, dataset, no_samples_per_class, no_of_classes):
         """

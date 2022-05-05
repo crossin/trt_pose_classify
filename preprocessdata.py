@@ -10,7 +10,7 @@ class preprocessdata:
         self.dist_bn_joints = []
         self.topology = topology
         self.num_parts = num_parts
-        self.text = "no hand"
+        self.text = "--"
         self.num_frames = 4
         self.prev_queue = [ self.num_frames ]*self.num_frames
         
@@ -94,25 +94,15 @@ class preprocessdata:
         
         """
         font = cv2.FONT_HERSHEY_SIMPLEX 
-        color = (255, 0, 0) 
+        color = (255, 255, 255) 
         org = (50, 50)
         thickness = 2
-        fontScale = 0.5
+        fontScale = 1
         no_frames = 4
-        if self.prev_queue == [1]* self.num_frames:
-            self.text = gesture_type[0]
-        elif self.prev_queue == [2]* self.num_frames:
-            self.text = gesture_type[1]
-        elif self.prev_queue == [3]* self.num_frames:
-            self.text = gesture_type[2]
-        elif self.prev_queue == [4]* self.num_frames:
-            self.text = gesture_type[3]
-        elif self.prev_queue == [5]* self.num_frames:
-            self.text = gesture_type[4]
-        elif self.prev_queue == [6]* self.num_frames:
-            self.text = gesture_type[5]
-        elif self.prev_queue == [7]*self.num_frames:
-            self.text = gesture_type[6]
+        for i in range(len(gesture_type)):
+            if self.prev_queue == [i+1]* self.num_frames:
+                self.text = gesture_type[i]
+                break
         image = cv2.putText(image, self.text, org, font,  
                        fontScale, color, thickness, cv2.LINE_AA) 
-        return image
+        return image, self.text
